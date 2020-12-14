@@ -1,22 +1,34 @@
 from GamePhysics import *
-from graphics import *
 
-a = 0
 score = 0
 lifes = 3
-clear = lambda: os.system('cls')
+level=1
 
+paintBackground()
+paintGameFrame()
 while True:
-    if lifes == 0:
-        print("out of lifes")
+    a = level
+
+    if lifes < 0:
+        print("Game over")
         break
-    a += 1
+    if a > 4: a = 4
+
     matrix(a)
+    showLifes(lifes)
+    showLevel(level,getGraph())
     while GameStillOn():
-        if lifes == 0: break
+        showScore(score,getGraph())
+        if lifes < 0: break
         paintMap()
-        showScore(score,lifes)
-        the_choose = choose()
-        the_score, lifes = move(the_choose, lifes)
-        score += the_score
+        result = move(choose(), lifes)
+        score += result[0]
         updateMap()
+        if lifes != result[1]:
+            lifes = result[1]
+            showLifes(lifes)
+    level+=1
+
+exitGame()
+ok_score_table = finalScore(score)
+ok_score_table.getMouse()

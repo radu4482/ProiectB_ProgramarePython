@@ -1,13 +1,15 @@
 from MapSystem import *
 
-
+oldLife = 3
 
 def choose():
     ok = 0
+    point1X = 0
+    point1Y = 0
     while ok == 0:
         pointX = win.getMouse()
-        point1Y = int((pointX.x.__int__() - 5) / 50)
-        point1X = int((pointX.y.__int__() - 5) / 50)
+        point1Y = int((pointX.x.__int__() - 75) / 50)
+        point1X = int((pointX.y.__int__() - 25) / 50)
         if Mapa[point1X][point1Y] != 0:
             ok = 1
         else:
@@ -23,9 +25,9 @@ def kill(row, column, color):
             score += kill(row - 1, column, color)
         if row < sizeX - 1:
             score += kill(row + 1, column, color)
-        if row > 0:
+        if column > 0:
             score += kill(row, column - 1, color)
-        if row < sizeY - 1:
+        if column < sizeY - 1:
             score += kill(row, column + 1, color)
     else:
         score = 0
@@ -92,10 +94,37 @@ def shiftColumn(index, row):
     Mapa[0][row] = 0
 
 
-def showScore(score, lifes):
-    text = Text(Point(150, 475), "Nr of lifes:" + str(lifes))
-    text.setTextColor('yellow')
-    text.draw(win)
-    text = Text(Point(250, 475), "The score:" + str(score))
-    text.setTextColor('yellow')
-    text.draw(win)
+def showLifes(lifes):
+    if lifes > 0:
+        for i in range(0, lifes):
+            hearts = Image(Point(100 + i * 50, 470), "forme/heart32.png")
+            hearts.draw(win)
+    for i in range(lifes, 3):
+        a = Rectangle(Point(75 + i * 50, 440), Point(125 + i * 50, 490))
+        a.setFill('black')
+        a.draw(win)
+
+def showLevel(level,Graph):
+    setBlackBackground(245,460,300,480)
+    setWhiteText(265,470,"Level: " + str(level))
+
+def showScore(score,Graph):
+    setBlackBackground(300,460,390,480)
+    setWhiteText(350, 470, "Score: " + str(score))
+
+def finalScore(score):
+    theScore = GraphWin("TheScore", 200, 100)
+
+    text = Text(Point(100, 25), "The score: " + str(score))
+    text.setTextColor('black')
+    text.draw(theScore)
+
+    exit_box = Rectangle(Point(80, 45), Point(130, 75))
+    exit_box.setFill(color_rgb(200, 200, 200))
+    exit_box.setOutline('black')
+    exit_box.draw(theScore)
+
+    exit_text = Text(Point(105, 60), "Exit")
+    exit_text.setTextColor('black')
+    exit_text.draw(theScore)
+    return theScore
