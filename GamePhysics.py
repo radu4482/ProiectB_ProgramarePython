@@ -2,6 +2,8 @@ from MapSystem import *
 
 oldLife = 3
 
+#clientul alege prin apasarea intefata grafica , piesa pe care o doreste sa o elimine
+#si se va returna pozitia respectivei piese
 def choose():
     ok = 0
     point1X = 0
@@ -16,7 +18,8 @@ def choose():
             print("Try again!")
     return [point1X, point1Y]
 
-
+#prin aceasta functie se vor elimina toate elementele vecine de aceeasi culoare
+#sub forma de domino returnand ca si scor numarul de elemente gasite
 def kill(row, column, color):
     if Mapa[row][column] == color:
         score = 1
@@ -33,13 +36,14 @@ def kill(row, column, color):
         score = 0
     return score
 
-
+#aceasta functie o folosesc sub forma de test, pentru a putea decide mai usor numarul de vieti
 def move(the_move, lifes):
     score = kill(the_move[0], the_move[1], Mapa[the_move[0]][the_move[1]])
     if score == 1: lifes -= 1
     return score, lifes
 
-
+#dupa ce se sterg elementele sub forma de domino , se va updata piesele ramase pe baza acestei functii
+#se vor updata fiecare coloana in parte , pe urma coloanele ramase vor fi trase in dreapta 
 def updateMap():
     for column in range(0, sizeY):
         updateColumns(column)
