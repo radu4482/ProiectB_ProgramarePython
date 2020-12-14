@@ -3,6 +3,7 @@ from graphics import *
 
 win = GraphWin("My Game", 500, 500)
 win.setBackground('black')
+#initializez matricea elementelor cu 0
 Mapa = [[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]]
 
@@ -11,7 +12,7 @@ forme = ["forme/red.png", "forme/cyan.png", "forme/yellow.png", "forme/green.png
 sizeX = 8
 sizeY = 7
 
-
+#se populeaza matricea dupa numarul de elemente(level of dificulty) intr-un mod complet aleatoriu(random)
 def matrix(level):
     for i in range(0, 8):
         for j in range(0, 7):
@@ -25,7 +26,7 @@ def paintBackground():
     gameBackground = Image(Point(250, 250), "forme/piramide.gif")
     gameBackground.draw(win)
 
-
+#se creaza tabela de joc si cu tabul pentru viata , level si score
 def paintGameFrame():
     setBlackBackground(73, 23,427, 427)
     setBlackBackground(0, 440,500, 500)
@@ -40,6 +41,7 @@ def setWhiteText(x,y,theText):
     text.setTextColor('white')
     text.draw(win)
 
+# se populeaza tabela de joc cu elementele din matricea jocului
 def paintMap():
     for j in range(0, sizeY):
         for i in range(0, sizeX):
